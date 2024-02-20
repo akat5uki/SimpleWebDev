@@ -31,7 +31,7 @@ while ($http.IsListening) {
     $context = $http.GetContext()
 
     # ROUTE Kill webserver
-    # http://127.0.0.1/kill
+    # http://127.0.0.1:8080/kill
     if ($context.Request.HttpMethod -eq 'GET' -and $context.Request.RawUrl -eq '/kill') {
 
         # We can log the request to the terminal
@@ -43,7 +43,7 @@ while ($http.IsListening) {
         #resposed to the request
         $buffer = [System.Text.Encoding]::UTF8.GetBytes($html) # convert htmtl to bytes
         $context.Response.ContentLength64 = $buffer.Length
-        $context.Response.OutputStream.Write($buffer, 0, $buffer.Length) #stream to broswer
+        $context.Response.OutputStream.Write($buffer, 0, $buffer.Length) # stream to broswer
         $context.Response.OutputStream.Close() # close the response
 
         break
@@ -51,7 +51,7 @@ while ($http.IsListening) {
     }
 
     # ROUTE GET root
-    # http://127.0.0.1/
+    # http://127.0.0.1:8080/
     if ($context.Request.HttpMethod -eq 'GET' -and $context.Request.RawUrl -eq '/') {
 
         # We can log the request to the terminal
@@ -69,7 +69,7 @@ while ($http.IsListening) {
     }
 
     # ROUTE POST root
-    # http://127.0.0.1/'
+    # http://127.0.0.1:8080/'
     if ($context.Request.HttpMethod -eq 'POST' -and $context.Request.RawUrl -eq '/') {
 
         # decode the form post
