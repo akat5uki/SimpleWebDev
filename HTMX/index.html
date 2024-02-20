@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/htmx.org@1.9.6"
+        integrity="sha384-FhXw7b6AlE/jyjlZH5iHa/tTe9EpJ1Y55RjcgPbjeWMskSxZt1v9qkxLJWNJaGni"
+        crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/htmx.org/dist/ext/json-enc.js"></script>
+    <title>HTMX Test</title>
+</head>
+
+<body id="html-body">
+    <button hx-get="/kill" hx-swap="innerHTML" hx-target="#html-body">
+        Kill Server
+    </button>
+    <br>
+    <button hx-post="/" hx-target="#test-div1" name="Click me button">
+        Click Me
+        <img class="htmx-indicator" src="/assets/loading.gif">
+    </button>
+    <div id="test-div1">test div 1</div>
+    <form hx-post="/" hx-target="#response" hx-ext="json-enc">
+        <label>Name: <input type="text" name="name"></label>
+        <label>Email: <input type="email" name="email"></label>
+        <input type="submit" value="Submit">
+    </form>
+    <div id="response"></div>
+</body>
+
+</html>
