@@ -21,11 +21,37 @@
       Click Me
     </button>
     <div id="test-div1">test div 1</div>
-    <form hx-post="/" hx-target="#response" hx-ext="json-enc">
+    <form hx-post="/" hx-target="#response2" hx-ext="json-enc">
       <label>Name: <input type="text" name="name" /></label>
-      <label>Email: <input type="email" name="email" /></label>
+      <label>Email: <input type="email" name="email2" /></label>
+      <input type="submit" value="Submit2" />
+    </form>
+    <div id="response2"></div>
+
+    <hr>
+    
+    <form
+      hx-post="http://127.0.0.1:8000/api/v1/users"
+      hx-target="#response"
+      hx-ext="json-enc"
+      hx-indicator="#indicator"
+    >
+      <label for="email">Email:</label><input type="email" name="email" id="id-email" />
+      <label for="password">Password:</label><input type="password" name="password" id="id-pass" />
       <input type="submit" value="Submit" />
     </form>
     <div id="response"></div>
+    <button
+      hx-get="http://127.0.0.1:8000/api/v1/users"
+      hx-target="#div-resp"
+      hx-ext="json-enc"
+      hx-indicator="#indicator"
+    >
+      Fetch
+    </button>
+    <div id="div-resp"></div>
+    <div id="id-img-div" class="img-div">
+      <img id="indicator" class="htmx-indicator" src="/assets/loading.gif" />
+    </div>
   </body>
 </html>

@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -19,6 +18,130 @@
     <button id="plus1" onclick="addOne()">+1</button>
     <button id="reset" onclick="resetCount()">Reset</button>
     <button id="minus1" onclick="subOne()">-1</button>
+
+    <hr />
+
+    <div id="id-get-data" class="div-button div-text">Fetch all Users</div>
+    <div id="id-users" class="div-flex-users"></div>
+    <form
+      id="id-create-user"
+      name="create-user"
+      class="form-css"
+      action="/"
+      method="post"
+      enctype="application/x-www-form-urlencoded"
+    >
+      <label for="id-email-c" form="id-create-user">E-mail</label>
+      <input id="id-email-c" name="email-c" type="email" required />
+      <label for="id-pass-c" form="id-create-user">Password</label>
+      <input id="id-pass-c" name="pass-c" type="password" required />
+      <input id="id-signin-c" name="signin-c" type="submit" value="Sign in" />
+      <input id="id-signup-c" name="signup-c" type="submit" value="Sign up" />
+      <input id="id-reset-c" name="reset-c" type="reset" value="Reset" />
+    </form>
+    <template id="id-template-users">
+      <div id="id-contain" class="div-cont div-color">
+        <div id="id-email" class="div-text" name="user-email"></div>
+        <div id="id-id" class="div-text" name="user-id"></div>
+        <div id="id-created" class="div-text" name="user-created"></div>
+      </div>
+    </template>
   </body>
-  
 </html>
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simple SPA</title>
+<style>
+  /* Basic CSS styling */
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  header {
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+  }
+  nav {
+    background-color: #f4f4f4;
+    padding: 10px;
+  }
+  nav ul {
+    list-style-type: none;
+    padding: 0;
+    text-align: center;
+  }
+  nav ul li {
+    display: inline;
+    margin-right: 10px;
+  }
+  nav ul li a {
+    text-decoration: none;
+    color: #333;
+  }
+  section {
+    display: none;
+    padding: 20px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Simple SPA</h1>
+</header>
+
+<nav>
+  <ul>
+    <li><a href="#home">Home</a></li>
+    <li><a href="#about">About</a></li>
+  </ul>
+</nav>
+
+<section id="home">
+  <h2>Home Section</h2>
+  <p>This is the home section of our SPA.</p>
+</section>
+
+<section id="about">
+  <h2>About Section</h2>
+  <p>This is the about section of our SPA.</p>
+</section>
+
+<script>
+  // JavaScript to handle navigation and show/hide sections
+  const sections = document.querySelectorAll('section');
+  const navLinks = document.querySelectorAll('nav a');
+
+  function showSection(id) {
+    sections.forEach(section => {
+      if (section.id === id) {
+        section.style.display = 'block';
+      } else {
+        section.style.display = 'none';
+      }
+    });
+  }
+
+  function handleNavLinkClick(event) {
+    event.preventDefault();
+    const targetId = event.target.getAttribute('href').substring(1);
+    showSection(targetId);
+  }
+
+  navLinks.forEach(link => {
+    link.addEventListener('click', handleNavLinkClick);
+  });
+
+  // Show the home section by default
+  showSection('home');
+</script>
+
+</body>
+</html> -->

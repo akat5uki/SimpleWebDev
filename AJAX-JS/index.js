@@ -56,3 +56,85 @@ async function subOne() {
 async function resetCount() {
   sendAJAX("GET", "/", updateCount, ["count", "reset"]);
 }
+
+// FastAPI
+
+async function handleFetch(event) {
+  event.preventDefault();
+
+  const url_params = {
+    limit: 10,
+    skip: 0,
+    search: "",
+  };
+  const url_params_str = new URLSearchParams(url_params).toString();
+  const api_url = "http://127.0.0.1:8000/api/v1/users/";
+  const url = `${api_url}?${url_params_str}`;
+  const options = {
+    method: "GET",
+    headers: {
+      // Authorization: "Bearer {personal_access_token}",
+      Accept: "application/json",
+    },
+  };
+
+  try {
+    const response = await fetch(url, options);
+    resp_json = await response.json();
+    console.log(resp_json);
+    // event.target.innerText = JSON.stringify(resp_json);
+
+    const users_div = document.getElementById("id-users");
+    users_div.innerText = "";
+    if ("content" in document.createElement("template")) {
+      const template = document.getElementById("id-template-users");
+      resp_json.forEach((ele) => {
+        const clone = template.content.cloneNode(true);
+        let field_divs = clone.querySelectorAll("div");
+        console.log(field_divs[0].getAttribute("id"));
+        field_divs.forEach((fdiv) => {
+          switch (fdiv.getAttribute("id")) {
+            case "id-contain":
+              fdiv.setAttribute("id", `id-contain-${ele["id"]}`);
+              break;
+
+            case "id-email":
+              fdiv.setAttribute("id", `id-email-${ele["id"]}`);
+              fdiv.setAttribute("name", `user-email-${ele["id"]}`);
+              fdiv.textContent = ele["email"];
+              break;
+
+            case "id-id":
+              fdiv.setAttribute("id", `id-id-${ele["id"]}`);
+              fdiv.setAttribute("name", `user-id-${ele["id"]}`);
+              fdiv.textContent = ele["id"];
+              break;
+
+            case "id-created":
+              fdiv.setAttribute("id", `id-created-${ele["id"]}`);
+              fdiv.setAttribute("name", `user-created-${ele["id"]}`);
+              fdiv.textContent = ele["created_at"];
+              break;
+
+            default:
+              break;
+          }
+        });
+        // field_divs[1].textContent = ele["email"];
+        // field_divs[2].textContent = ele["id"];
+        // field_divs[3].textContent = ele["created_at"];
+        users_div.appendChild(clone);
+      });
+    } else {
+      throw new Error("Template tag not supported");
+    }
+  } catch (error) {
+    console.error("Error: ", error);
+  }
+}
+
+async function Main() {
+  document.getElementById("id-get-data").addEventListener("click", handleFetch);
+}
+
+document.addEventListener("DOMContentLoaded", Main);

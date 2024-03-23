@@ -1,3 +1,57 @@
-div.css-test1{
+div.css-test1 {
     color: rgb(255, 170, 0);
+}
+
+.div-cont {
+    /* float: left; */
+    width: 21%;
+    padding: 50px 10px 50px 10px;
+    margin: 20px;
+    height: auto;
+    border-radius: 10px;
+    border-color: #2f353aaa;
+    border: solid;
+}
+
+.div-text {
+    display: block;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    text-align: center;
+    font-size: 1em;
+}
+
+.div-color {
+    background-color: #2f353aaa;
+    color: #fff;
+
+}
+
+.div-color:hover {
+    background-color: #fff;
+    color: #2f353aaa;
+    cursor: pointer;
+}
+
+.div-button {
+    width: fit-content;
+    height: 20px;
+    padding: 8px 10px 8px 10px;
+    margin: 20px;
+    border-radius: 10px;
+    border-color: #2f353aaa;
+    border: solid;
+    background-color: #1373e8;
+    color: #f5fafdaa;
+    cursor: pointer;
+}
+
+.form-css {
+    padding: 20px;
+}
+
+.div-flex-users {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
 }
