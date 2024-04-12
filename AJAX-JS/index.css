@@ -55,3 +55,8 @@ div.css-test1 {
     flex-direction: row;
     flex-wrap: wrap;
 }
+
+.body-bg {
+    background-color: #424545;
+    color: white;
+}

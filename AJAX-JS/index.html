@@ -9,7 +9,7 @@
     <script type="text/javascript" src="index.js"></script>
   </head>
 
-  <body>
+  <body class="body-bg">
     <div id="hello" class="css-test1">hello world</div>
     <div id="test2">I am ASR</div>
     <button id="btn1" onclick="loadDoc1()">Click me</button>
@@ -21,8 +21,25 @@
 
     <hr />
 
-    <div id="id-get-data" class="div-button div-text">Fetch all Users</div>
+    <!-- FastAPI -->
+
+    <div id="id-get-users" class="div-button div-text">Fetch all Users</div>
     <div id="id-users" class="div-flex-users"></div>
+    <form
+      id="id-get-user"
+      name="get-user"
+      class="form-css"
+      action="/"
+      method="get"
+      enctype="application/x-www-form-urlencoded"
+      onsubmit="fetchUser(event);"
+    >
+      <label form="id-get-user" for="id-id-g">User ID</label>
+      <input id="id-id-g" name="id-g" type="number" required />
+      <input id="id-fetch-g" name="fetch-g" type="submit" value="Fetch User" />
+      <input id="id-reset-g" name="reset-g" type="reset" value="Reset" />
+    </form>
+    <div id="id-user"></div>
     <form
       id="id-create-user"
       name="create-user"
@@ -30,17 +47,71 @@
       action="/"
       method="post"
       enctype="application/x-www-form-urlencoded"
+      onsubmit="formUserAction(event);"
     >
       <label for="id-email-c" form="id-create-user">E-mail</label>
-      <input id="id-email-c" name="email-c" type="email" required />
+      <input
+        id="id-email-c"
+        name="email-c"
+        type="email"
+        value="user@example.com"
+        placeholder="user@example.com"
+        required
+      />
       <label for="id-pass-c" form="id-create-user">Password</label>
-      <input id="id-pass-c" name="pass-c" type="password" required />
-      <input id="id-signin-c" name="signin-c" type="submit" value="Sign in" />
-      <input id="id-signup-c" name="signup-c" type="submit" value="Sign up" />
+      <input
+        id="id-pass-c"
+        name="pass-c"
+        type="password"
+        value="string"
+        placeholder="string"
+        required
+      />
+      <input
+        id="id-signin-c"
+        name="signin-c"
+        type="submit"
+        value="Sign in"
+        onclick="prepareSignIn();"
+      />
+      <input
+        id="id-signup-c"
+        name="signup-c"
+        type="submit"
+        value="Sign up"
+        onclick="prepareSignUp();"
+      />
       <input id="id-reset-c" name="reset-c" type="reset" value="Reset" />
     </form>
+    <div id="id-create-out"></div>
+    <button onclick="getAllItems();">Get All Items</button>
+    <button onclick="userLogout();">Logout</button>
+    <div id="id-chat-main" name="chat-main">
+      <ul id="id-msgs" name="user-msgs"></ul>
+      <form
+        id="id-chat-form"
+        name="chat-form"
+        class="form-css"
+        action="/"
+        onsubmit="wsSendMessage(event);"
+      >
+        <input
+          type="text"
+          id="id-msg-text"
+          name="msg-text"
+          autocomplete="off"
+        />
+        <input
+          type="submit"
+          id="id-ws-send-btn"
+          name="ws-send-btn"
+          value="Send"
+        />
+      </form>
+    </div>
     <template id="id-template-users">
       <div id="id-contain" class="div-cont div-color">
+        <div id="id-msg" class="div-text" name="msg"></div>
         <div id="id-email" class="div-text" name="user-email"></div>
         <div id="id-id" class="div-text" name="user-id"></div>
         <div id="id-created" class="div-text" name="user-created"></div>
