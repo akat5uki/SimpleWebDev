@@ -3,13 +3,23 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <!-- <script
       src="https://unpkg.com/htmx.org@1.9.6"
       integrity="sha384-FhXw7b6AlE/jyjlZH5iHa/tTe9EpJ1Y55RjcgPbjeWMskSxZt1v9qkxLJWNJaGni"
       crossorigin="anonymous"
-    ></script>
-    <script src="https://unpkg.com/htmx.org/dist/ext/json-enc.js"></script>
+    ></script> -->
+    <script src="/assets/htmx/htmx.min.js"></script>
+    <script src="/assets/htmx/ext/json-enc.js"></script>
+    <script src="/assets/htmx/ext/client-side-templates.js"></script>
+    <script src="/assets/htmx/ext/mustache.js"></script>
+    <script src="/assets/htmx/ext/path-params.js"></script>
+    <script src="/assets/htmx/ext/response-targets.js"></script>
+    <script src="/assets/htmx/ext/token-authentication.js"></script>
+    <script src="/assets/_hyperscript.min.js"></script>
     <title>HTMX Test</title>
+    <link rel="stylesheet" type="text/css" href="index.css" />
+    <script type="text/javascript" src="index.js"></script>
   </head>
 
   <body id="html-body">
@@ -28,30 +38,153 @@
     </form>
     <div id="response2"></div>
 
-    <hr>
-    
+    <!-- FastAPI -->
+
+    <hr />
+
+    <!-- <form
+      hx-post="http://127.0.0.1:8000/api/v1/users/"
+      hx-target="#resp-user-post"
+      hx-ext="json-enc"
+      hx-indicator="#indicator"
+    > -->
+    <br />
     <form
-      hx-post="http://127.0.0.1:8000/api/v1/users"
-      hx-target="#response"
-      hx-ext="json-enc"
+      hx-post="http://127.0.0.1:8000/api/v1/users/"
+      hx-target="#resp-user-post"
+      hx-ext="json-enc, client-side-templates"
       hx-indicator="#indicator"
+      mustache-template="user-template"
     >
-      <label for="email">Email:</label><input type="email" name="email" id="id-email" />
-      <label for="password">Password:</label><input type="password" name="password" id="id-pass" />
-      <input type="submit" value="Submit" />
+      <label for="email">Email:</label>
+      <input type="email" name="email" id="id-email" />
+      <label for="password">Password:</label>
+      <input type="password" name="password" id="id-pass" />
+      <input type="submit" value="Sign Up" />
     </form>
-    <div id="response"></div>
-    <button
-      hx-get="http://127.0.0.1:8000/api/v1/users"
-      hx-target="#div-resp"
+    <div id="resp-user-post"></div>
+    <!-- <form
+      hx-get="http://127.0.0.1:8000/api/v1/users/"
+      hx-target="#resp-users-get"
       hx-ext="json-enc"
       hx-indicator="#indicator"
+    > -->
+    <!-- <form
+      hx-get="http://127.0.0.1:8000/api/v1/users/"
+      hx-params="limit, skip, search"
+      hx-target="#resp-users-get"
+      hx-ext="json-enc, client-side-templates"
+      hx-indicator="#indicator"
+      mustache-array-template="users-template"
     >
-      Fetch
+      <input type="number" name="limit" value="6" class="hide-ele" />
+      <input type="number" name="skip" value="0" class="hide-ele" />
+      <input type="search" name="search" value="" class="hide-ele" />
+      <input type="submit" value="Fetch all Users" />
+    </form> -->
+    <br />
+    <button
+      hx-get="http://127.0.0.1:8000/api/v1/users/"
+      hx-vals='{"limit": "6", "skip": "0", "search": ""}'
+      hx-target="#resp-users-get"
+      hx-ext="json-enc, client-side-templates"
+      hx-indicator="#indicator"
+      mustache-array-template="users-template"
+    >
+      Fetch all Users
     </button>
-    <div id="div-resp"></div>
+    <div id="resp-users-get" class="div-flex-users"></div>
+
+    <br />
+    <form
+      hx-get="http://127.0.0.1:8000/api/v1/users/{userID}"
+      hx-target="#resp-user-get"
+      hx-target-404="#resp-user-get"
+      hx-ext="json-enc, client-side-templates, path-params, response-targets"
+      hx-indicator="#indicator"
+      mustache-template="user-template"
+    >
+      <label for="userID">User ID:</label>
+      <input type="number" name="userID" id="id-user-id" />
+      <input type="submit" value="Get user details" />
+    </form>
+    <div hx-ext="response-targets" id="resp-user-get"></div>
+
+    <br />
+    <form
+      id="id-login-form"
+      hx-post="http://127.0.0.1:8000/api/v1/login/"
+      hx-vals='{"grant_type": "password"}'
+      hx-swap="none"
+      hx-ext="create-token"
+      hx-indicator="#indicator"
+    >
+      <label for="username">Email:</label>
+      <input type="email" name="username" id="id-email-login" />
+      <label for="password">Password:</label>
+      <input type="password" name="password" id="id-pass-login" />
+      <input type="submit" value="Sign In" />
+    </form>
+
+    <br />
+    <button
+      hx-get="http://127.0.0.1:8000/api/v1/items/"
+      hx-target="#resp-items-get"
+      hx-target-401="#resp-items-get"
+      hx-ext="check-auth, response-targets, client-side-templates"
+      hx-indicator="#indicator"
+      mustache-array-template="items-template"
+      script="on htmx:afterRequest from #id-login-form remove .hide-ele from me
+              on htmx:afterOnLoad from me remove .hide-ele from me
+              on htmx:responseError from me add .hide-ele to me"
+      class="hide-ele"
+    >
+      Get All Items
+    </button>
+    <div
+      hx-ext="response-targets"
+      id="resp-items-get"
+      class="div-flex-users"
+    ></div>
+
+    <button script="on click toggle .hide-ele on me">
+      Click Me
+    </button>
+
+    <br />
     <div id="id-img-div" class="img-div">
       <img id="indicator" class="htmx-indicator" src="/assets/loading.gif" />
     </div>
+
+    <template id="user-template">
+      <div class="div-cont div-color">
+        <div class="div-text">{{detail}}</div>
+        <div class="div-text">{{email}}</div>
+        <div class="div-text">{{id}}</div>
+        <div class="div-text">{{created_at}}</div>
+      </div>
+    </template>
+
+    <template id="users-template">
+      {{#data}}
+      <div class="div-cont div-color">
+        <div class="div-text">{{email}}</div>
+        <div class="div-text">{{id}}</div>
+        <div class="div-text">{{created_at}}</div>
+      </div>
+      {{/data}}
+    </template>
+
+    <template id="items-template">
+      {{#data}}
+      <div class="div-cont div-color">
+        <div class="div-text">{{detail}}</div>
+        <div class="div-text">{{Item.title}}</div>
+        <div class="div-text">{{Item.id}}</div>
+        <div class="div-text">{{Item.content}}</div>
+        <div class="div-text">{{Item.owner_id}}</div>
+      </div>
+      {{/data}}
+    </template>
   </body>
 </html>
